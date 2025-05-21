@@ -36,28 +36,24 @@ public class Differ {
 
     // 1. Sorted
     // 2. Keep values: key, new value, old value, status('added', 'removed', 'changed', 'unchanged'))
-    public static List<Map<String, Object>>  compare(Map<String, Object> file1, Map<String, Object> file2) {
-        var result = new ArrayList<Map<String, Object>>();
+    public static List<CompareResult> compare(Map<String, Object> file1, Map<String, Object> file2) {
+        var result = new ArrayList<CompareResult>();
         var keys = new TreeSet<String>();
         keys.addAll(file1.keySet());
         keys.addAll(file2.keySet());
         for (var key : keys) {
             var value1 = file1.get(key);
             var value2 = file2.get(key);
-            HashMap<String, Object> diff = new HashMap<>();
-            diff.put("key", key);
             if (Objects.equals(value2, value1)) {
-                diff.put("status", "unchanged");
-                diff.put("new_value", value1);
+                result.add(new CompareResult(key, Status.UNCHANGED, value1, value2));
             }
-            ///
-            result.add(diff);
+
         }
 
         return result;
     }
 
-    public static String format(Object diff, String format) {
+    public static String format(List<CompareResult> diff, String format) {
         return "{}";
     }
 }

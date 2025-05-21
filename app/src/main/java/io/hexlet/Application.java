@@ -29,7 +29,7 @@ public class Application implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        var diff = Differ.generate(file1, file2);
+        var diff = Differ.generate(file1, file2, format);
         System.out.println(diff);
         return 0;
     }
